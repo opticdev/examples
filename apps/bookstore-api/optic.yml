@@ -1,0 +1,7 @@
+ruleset:
+  - breaking-changes
+  - naming:
+      required_on: always
+      properties: snake_case
+      pathComponents: camelCase
+      queryParameters: snake_case

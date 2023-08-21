@@ -1,0 +1,60 @@
+openapi: 3.0.3
+info:
+  title: My api spec
+  version: 1.0.0
+components:
+  schemas: {}
+paths:
+  /api/users:
+    get:
+      responses:
+        "200":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  users:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                      required:
+                        - id
+                required:
+                  - users
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+              required:
+                - id
+        required: true
+      responses:
+        "200":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  users:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                      required:
+                        - id
+                required:
+                  - users
+x-optic-url: https://app.useoptic.com/[placeholder]

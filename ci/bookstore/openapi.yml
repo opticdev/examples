@@ -1,0 +1,236 @@
+openapi: 3.1.3
+info:
+  title: Optic Bookstore Demo Spec
+  description: A demo specification for Optic
+  contact:
+    email: support@useoptic.com
+  version: 1.0.0
+servers:
+  - url: https://bookstore.optic.dev
+paths:
+  /books:
+    get:
+      summary: Get a list of books
+      parameters:
+        - schema:
+            type: string
+          in: query
+          description: ID of book to fetch after
+          name: after_id
+          required: false
+        - schema:
+            type: string
+            enum:
+              - asc
+              - desc
+          in: query
+          description: Order to sort books by, defaults to asc
+          name: sort_order
+          required: false
+        - schema:
+            type: string
+            enum:
+              - created_at
+              - name
+          in: query
+          description: Book key to sort by, defaults to name
+          name: sort_key
+          required: false
+      responses:
+        "200":
+          description: Book success response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/BookResponse"
+                  next:
+                    type:
+                      - string
+                      - "null"
+                    description: after_id for next page
+                  has_more_data:
+                    type: boolean
+                required:
+                  - data
+                  - next
+                  - has_more_data
+    post:
+      summary: Create a book
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BookRequest"
+      responses:
+        "201":
+          description: Successfully created book
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                required:
+                  - id
+  /books/{book_id}:
+    get:
+      summary: Get a book
+      parameters:
+        - $ref: "#/components/parameters/BookId"
+      responses:
+        "200":
+          description: Book success response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookResponse"
+    patch:
+      summary: Update a book
+      parameters:
+        - $ref: "#/components/parameters/BookId"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                author_id:
+                  type: string
+      responses:
+        "204":
+          description: Successfully updated book
+  /author:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuthorRequest"
+      responses:
+        "201":
+          description: Successfully created author
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                required:
+                  - id
+  /author/{author_id}:
+    get:
+      parameters:
+        - $ref: "#/components/parameters/AuthorId"
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthorResponse"
+    patch:
+      parameters:
+        - $ref: "#/components/parameters/AuthorId"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+      responses:
+        "204":
+          description: Successfully updated author
+
+components:
+  parameters:
+    BookId:
+      schema:
+        type: string
+      in: path
+      description: ID of book
+      name: book_id
+      required: true
+    AuthorId:
+      schema:
+        type: string
+      in: path
+      description: ID of author
+      name: author_id
+      required: true
+  schemas:
+    AuthorRequest:
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+        - name
+    AuthorResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: FrCmluBlTSwwxLLEbEDCP
+        name:
+          type: string
+          example: Jane Austen
+        created_at:
+          type: string
+          format: timestamp
+          example: 2023-02-18T14:29:26.384Z
+        updated_at:
+          type: string
+          format: timestamp
+          example: 2023-03-18T14:29:26.384Z
+      required:
+        - id
+        - name
+        - created_at
+        - updated_at
+    BookRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        author_id:
+          type: string
+      required:
+        - name
+        - author_id
+    BookResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: BEfCDC5FHWelCADHR9Rcm
+        name:
+          type: string
+          example: Pride and Prejudice
+        author_id:
+          type: string
+          example: FrCmluBlTSwwxLLEbEDCP
+        created_at:
+          type: string
+          format: timestamp
+          example: 2023-05-18T14:29:26.384Z
+        updated_at:
+          type: string
+          format: timestamp
+          example: 2023-05-18T14:29:26.384Z
+      required:
+        - id
+        - name
+        - author_id
+        - created_at
+        - updated_at

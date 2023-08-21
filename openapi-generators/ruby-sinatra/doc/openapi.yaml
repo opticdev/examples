@@ -1,0 +1,86 @@
+---
+openapi: 3.0.3
+info:
+  title: openapi-gen-ruby-sinatra
+  version: 1.0.0
+servers: []
+paths:
+  "/":
+    get:
+      summary: GET /
+      responses:
+        '200':
+          description: returns JSON content type
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    msg:
+                      type: string
+                  required:
+                  - msg
+              example:
+              - msg: Hello, World!
+  "/users":
+    get:
+      summary: GET /users
+      responses:
+        '200':
+          description: gets all users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                  required:
+                  - id
+                  - name
+              example:
+              - id: 1
+                name: John
+              - id: 2
+                name: Jane
+              - id: 3
+                name: Bob
+  "/users/create":
+    post:
+      summary: POST /users/create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+              required:
+              - name
+            example:
+              name: New User
+      responses:
+        '200':
+          description: creates a new user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                required:
+                - id
+                - name
+              example:
+                id: 4
+                name: New User
