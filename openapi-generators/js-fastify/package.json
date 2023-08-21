@@ -11,7 +11,7 @@
     "@fastify/swagger": "^8.3.1",
     "@sinclair/typebox": "^0.27.8",
     "fastify": "^4.15.0",
-    "yaml": "^2.2.1"
+    "yaml": "^2.2.2"
   },
   "devDependencies": {
     "@types/node": "^18.15.11",
