@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "outDir": "build",
+    "resolveJsonModule": true,
+    "rootDir": "src",
+    "allowSyntheticDefaultImports": true,
+    "composite": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "esModuleInterop": true
+  },
+  "ts-node": {
+    "files": true
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "name": "bookstore-api",
+  "version": "1.0.0",
+  "main": "build/index.js",
+  "repository": "https://github.com/opticdev/bookstore-api.git",
+  "author": "Nicholas Lim <18374483+niclim@users.noreply.github.com>",
+  "license": "MIT",
+  "scripts": {
+    "clean": "rm -rf build && rm -f tsconfig.tsbuildinfo",
+    "build": "yarn run tsc --build --verbose",
+    "generate-spec": "ts-node --project ./tsconfig.json ./src/generate-openapi.ts",
+    "start": "node ./build/index.js",
+    "format": "prettier --write 'src/**/*.(js|jsx|ts|tsx|json|css)'",
+    "start:local": "nodemon -w ./src ./src/index.ts"
+  },
+  "dependencies": {
+    "@fastify/swagger": "^8.3.1",
+    "@sinclair/typebox": "^0.28.2",
+    "fastify": "^4.15.0",
+    "js-yaml": "^4.1.0",
+    "nanoid": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/js-yaml": "^4",
+    "@types/node": "^18.0.0",
+    "nodemon": "^2.0.19",
+    "prettier": "^2.5.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.5"
+  }
+}
