@@ -1,10 +1,10 @@
-# openapi-gen-go-gin
+# Generating an OpenAPI specification with Optic and Go
 
 An example API written with the Go Gin web framework to demonstrate generating an OpenAPI v3 specification.
 
 ## Dependencies
 - [Go](https://go.dev/doc/install)
-- Optic ([installation instructions](https://www.useoptic.com/docs))
+- [Optic](https://www.useoptic.com/docs)
 - [Curl](https://curl.se) (optional)
 - [Hurl](https://hurl.dev) (optional)
 - [HTTPie](https://httpie.io) (optional)
