@@ -1,0 +1,1 @@
+⚠️ Note: If this were a standalone project, the GitHub Actions workflow file would live here. Because workflow files must exist in the root `.github/workflows` directory, we symlink the relevant workflows here for reference purposes.
