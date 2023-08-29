@@ -22,10 +22,9 @@ jobs:
           # Your Optic Cloud Token
           optic_token: ${{ secrets.OPTIC_TOKEN }}
 
-          # A GitHub token with access to create comments on pull requests
+          # A GitHub token with `pull-requests: write` permissions scope
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
-          # If true, standard check failures will cause this action to fail.
-          # If false, standard check failures will show in PR comments and
-          # in Optic Cloud but will not cause the action to fail
+          # true: standard check failures will cause this action to fail
+          # false: standard check failures will show in PR comments and in Optic Cloud but will not cause the action to fail
           standards_fail: true
