@@ -10,6 +10,10 @@ on:
       - apps/bookstore-api/**
   workflow_call:
 
+defaults:
+  run:
+    working-directory: apps/bookstore-api
+
 jobs:
   diff-all:
     runs-on: ubuntu-latest
