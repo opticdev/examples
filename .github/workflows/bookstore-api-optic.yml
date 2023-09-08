@@ -55,6 +55,9 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
+      - name: Install Optic
+        run: sh -c "$(curl -Ls https://install.useoptic.com/install.sh)" 
+
       - name: Generate Spec
         run: yarn generate-spec
 
