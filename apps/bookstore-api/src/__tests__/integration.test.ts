@@ -7,15 +7,17 @@ beforeAll(async () => {
   app = await setupApp();
   if (process.env.OPTIC_PROXY) {
     await app.listen({ port: 3050 });
-    const originalAddress = app.server.address() as any;
+    const originalAddress = app.server.address();
+    const updatedAddress =
+      typeof originalAddress === "string" || originalAddress === null
+        ? process.env.OPTIC_PROXY
+        : { ...originalAddress, port: new URL(process.env.OPTIC_PROXY).port };
+
     app = {
       ...app,
       server: {
         ...app.server,
-        address: () => ({
-          ...originalAddress,
-          port: new URL(process.env.OPTIC_PROXY!).port,
-        }),
+        address: () => updatedAddress,
       } as any,
     };
   }
