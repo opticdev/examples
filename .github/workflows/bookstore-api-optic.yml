@@ -46,3 +46,17 @@ jobs:
 
           compare_from_pr: cloud:default
           compare_from_push: cloud:default
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Generate Spec
+        run: yarn generate-spec
+
+      - name: Verify spec against integration tests
+        run: yarn verify
