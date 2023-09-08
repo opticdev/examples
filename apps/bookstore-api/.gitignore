@@ -10,7 +10,4 @@ har-capture
 !.yarn/sdks
 .pnp.*
 
-# generated openapi spec
-openapi.yml
-
 tsconfig.tsbuildinfo

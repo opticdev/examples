@@ -1,0 +1,526 @@
+openapi: 3.1.3
+info:
+  title: Bookstore API
+  version: 1.0.0
+  description: The API for books
+components:
+  schemas: {}
+paths:
+  /healthcheck:
+    get:
+      responses:
+        "200":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                required:
+                  - status
+  /books:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                price:
+                  type: number
+                author_id:
+                  type: string
+              required:
+                - name
+                - price
+                - author_id
+        required: true
+      responses:
+        "200":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+                  price:
+                    type: number
+                  author_id:
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                required:
+                  - id
+                  - name
+                  - price
+                  - author_id
+                  - created_at
+                  - updated_at
+        "400":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                required:
+                  - message
+    get:
+      parameters:
+        - schema:
+            enum:
+              - asc
+              - desc
+            type: string
+          in: query
+          name: sort_order
+          required: false
+        - schema:
+            enum:
+              - name
+              - created_at
+              - updated_at
+            type: string
+          in: query
+          name: sort_key
+          required: false
+      responses:
+        "200":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                anyOf:
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                            name:
+                              type: string
+                            price:
+                              type: number
+                            author_id:
+                              type: string
+                            created_at:
+                              type: string
+                            updated_at:
+                              type: string
+                            author:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                name:
+                                  type: string
+                                created_at:
+                                  type: string
+                                updated_at:
+                                  type: string
+                              required:
+                                - id
+                                - name
+                                - created_at
+                                - updated_at
+                          required:
+                            - id
+                            - name
+                            - price
+                            - author_id
+                            - created_at
+                            - updated_at
+                      total_pages:
+                        type: number
+                      next:
+                        type: string
+                      has_more_data:
+                        type: boolean
+                        enum:
+                          - true
+                    required:
+                      - data
+                      - next
+                      - has_more_data
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                            name:
+                              type: string
+                            price:
+                              type: number
+                            author_id:
+                              type: string
+                            created_at:
+                              type: string
+                            updated_at:
+                              type: string
+                            author:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                name:
+                                  type: string
+                                created_at:
+                                  type: string
+                                updated_at:
+                                  type: string
+                              required:
+                                - id
+                                - name
+                                - created_at
+                                - updated_at
+                          required:
+                            - id
+                            - name
+                            - price
+                            - author_id
+                            - created_at
+                            - updated_at
+                      total_pages:
+                        type: number
+                      next:
+                        type: "null"
+                      has_more_data:
+                        const: false
+                        type: boolean
+                    required:
+                      - data
+                      - next
+                      - has_more_data
+  "/books/{bookId}":
+    get:
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: bookId
+          required: true
+      responses:
+        "200":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+                  price:
+                    type: number
+                  author_id:
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  author:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+                      created_at:
+                        type: string
+                      updated_at:
+                        type: string
+                    required:
+                      - id
+                      - name
+                      - created_at
+                      - updated_at
+                required:
+                  - id
+                  - name
+                  - price
+                  - author_id
+                  - created_at
+                  - updated_at
+        "404":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                required:
+                  - message
+    patch:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                price:
+                  type: number
+                author_id:
+                  type: string
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: bookId
+          required: true
+      responses:
+        "200":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+                  price:
+                    type: number
+                  author_id:
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                required:
+                  - id
+                  - name
+                  - price
+                  - author_id
+                  - created_at
+                  - updated_at
+        "404":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                required:
+                  - message
+  /authors:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+              required:
+                - name
+        required: true
+      responses:
+        "200":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                required:
+                  - id
+                  - name
+                  - created_at
+                  - updated_at
+    get:
+      responses:
+        "200":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                anyOf:
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                            name:
+                              type: string
+                            created_at:
+                              type: string
+                            updated_at:
+                              type: string
+                          required:
+                            - id
+                            - name
+                            - created_at
+                            - updated_at
+                      total_pages:
+                        type: number
+                      next:
+                        type: string
+                      has_more_data:
+                        type: boolean
+                        enum:
+                          - true
+                    required:
+                      - data
+                      - next
+                      - has_more_data
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                            name:
+                              type: string
+                            created_at:
+                              type: string
+                            updated_at:
+                              type: string
+                          required:
+                            - id
+                            - name
+                            - created_at
+                            - updated_at
+                      total_pages:
+                        type: number
+                      next:
+                        type: "null"
+                      has_more_data:
+                        const: false
+                        type: boolean
+                    required:
+                      - data
+                      - next
+                      - has_more_data
+  "/authors/{authorId}":
+    get:
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: authorId
+          required: true
+      responses:
+        "200":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                required:
+                  - id
+                  - name
+                  - created_at
+                  - updated_at
+        "404":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                required:
+                  - message
+    patch:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: authorId
+          required: true
+      responses:
+        "200":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                required:
+                  - id
+                  - name
+                  - created_at
+                  - updated_at
+        "404":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                required:
+                  - message
+servers:
+  - url: https://api.bookstore.com
+    description: Production server

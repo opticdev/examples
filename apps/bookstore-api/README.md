@@ -18,6 +18,7 @@ Get started by installing dependencies:
 
 And then run one of the following commands:
 - `yarn start:local` - starts the server
+- `yarn verify` - verifies the spec using integration tests
 - `yarn generate-spec` - generates an OpenAPI spec from code definitions
 
 ## Preview API changes in PRs

@@ -5,3 +5,12 @@ ruleset:
       properties: snake_case
       pathComponents: camelCase
       queryParameters: snake_case
+capture:
+  openapi.yml:
+    # Read reference docs here: https://www.useoptic.com/docs/capturing-traffic#configuration-reference
+    server:
+      url: http://localhost:3050
+    requests:
+      # ℹ️ Requests should be sent to the Optic proxy, the address of which is injected into 'run.command's env as OPTIC_PROXY (or the value of 'run.proxy_variable').
+      run:
+        command: yarn test
