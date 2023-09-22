@@ -11,6 +11,9 @@ capture:
       # Only one of the following run blocks can be used at a time #
       ##############################################################
 
+      run:
+        command: go test ./... -count=1
+
       # run:
       #   command: sh examples/curl/curl.sh
 
@@ -22,10 +25,10 @@ capture:
       #   proxy_variable: HURL_OPTIC_PROXY
 
       # the requests below will be made by Optic and are equivalent to the requests.run examples above
-      send:
-        - path: /
-        - path: /users
-        - path: /users/create
-          method: POST
-          data:
-            name: Hank
+      # send:
+      #   - path: /
+      #   - path: /users
+      #   - path: /users/create
+      #     method: POST
+      #     data:
+      #       name: Hank
