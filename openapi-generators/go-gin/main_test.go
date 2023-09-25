@@ -105,9 +105,6 @@ func TestCreateUser(t *testing.T) {
 		t.Fatalf("Couldn't read response body: %v", err)
 	}
 
-	fmt.Printf("NATE: %+v\n", Users)
-	fmt.Printf("NATE: %+v\n", string(body))
-
 	var user User
 	err = json.Unmarshal(body, &user)
 	if err != nil {
