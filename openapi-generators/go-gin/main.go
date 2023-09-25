@@ -1,12 +1,8 @@
 package main
 
 import (
-	"fmt"
-	"net/http"
-	"net/http/httputil"
-	"os"
-
 	"github.com/gin-gonic/gin"
+	"net/http"
 )
 
 type User struct {
@@ -50,7 +46,6 @@ func setupRouter() *gin.Engine {
 		}
 
 		Users = append(Users, newUser)
-
 		c.JSON(http.StatusCreated, newUser)
 	})
 
