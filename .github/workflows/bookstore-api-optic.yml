@@ -1,65 +1,22 @@
-name: bookstore-api-optic
+name: optic
 on:
+  pull_request:
   push:
     branches:
       - main
-    paths:
-      - apps/bookstore-api/**
-  pull_request:
-    paths:
-      - apps/bookstore-api/**
-  workflow_dispatch:
-
-defaults:
-  run:
-    working-directory: apps/bookstore-api
-
+ 
 jobs:
-  diff-all:
+  run:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-
-      - name: Install dependencies
-        run: yarn install
-
-      - name: Generate Spec
-        run: yarn generate-spec
-
-      - uses: opticdev/action@v1
-        with:
-          # Your Optic Cloud Token
-          optic_token: ${{ secrets.OPTIC_TOKEN }}
-
-          # A GitHub token with access to create comments on pull requests
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-
-          # If true, standard check failures will cause this action to fail.
-          # If false, standard check failures will show in PR comments and
-          # in Optic Cloud but will not cause the action to fail
-          standards_fail: true
-
-          # If you have more than one spec, separate matches with commas
-          # (openapi.yml,other.yml)
-          additional_args: --match apps/bookstore-api/openapi.yml
-
-          compare_from_pr: cloud:default
-          compare_from_push: cloud:default
-  verify:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Install dependencies
-        run: yarn install
 
       - name: Install Optic
-        run: sh -c "$(curl -Ls https://install.useoptic.com/install.sh)" -- latest /usr/local/bin/
+        run: npm install --location global @useoptic/optic
 
-      - name: Generate Spec
-        run: yarn generate-spec
-
-      - name: Verify spec against integration tests
-        run: yarn verify
+      - name: Run Optic
+        env:
+          OPTIC_TOKEN: ${{ secrets.OPTIC_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: optic run
