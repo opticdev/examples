@@ -15,7 +15,6 @@ import (
 )
 
 var router *gin.Engine
-var client *http.Client
 
 func init() {
 	router = setupRouter()
@@ -42,35 +41,9 @@ func TestRoot(t *testing.T) {
 }
 
 func TestUsers(t *testing.T) {
-	server := httptest.NewServer(router)
-	defer server.Close()
-
-	client := &http.Client{
-		Transport: &http.Transport{
-			Proxy: http.ProxyURL(getProxy()),
-		},
-	}
-	resp, err := client.Get(server.URL + "/users")
+	users, err := getUsers()
 	if err != nil {
-		t.Fatalf("Request failed: %v", err)
-	}
-	defer resp.Body.Close()
-
-	// verify status code
-	if resp.StatusCode != http.StatusOK {
-		t.Errorf("Expcted status code %d, but got %d", http.StatusOK, resp.StatusCode)
-	}
-
-	// parse response body
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		t.Errorf("Couldn't read response body: %v", err)
-	}
-
-	var users []User
-	err = json.Unmarshal(body, &users)
-	if err != nil {
-		t.Fatalf("Failed to unmarshal response body: %v", err)
+		t.Errorf(err.Error())
 	}
 
 	// verify response body
@@ -99,6 +72,12 @@ func TestCreateUser(t *testing.T) {
 		t.Errorf("Expected status code %d but got %d", http.StatusCreated, resp.StatusCode)
 	}
 
+	// the users we care about are stored in the server process, so we need to query its current state
+	users, err := getUsers()
+	if err != nil {
+		t.Errorf(err.Error())
+	}
+
 	// parse response body
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
@@ -112,9 +91,8 @@ func TestCreateUser(t *testing.T) {
 	}
 
 	// verify response body
-	Users = getUsers()
 	expectedUser := User{
-		ID:   len(Users),
+		ID:   len(users),
 		Name: "Hank",
 	}
 	if user != expectedUser {
@@ -122,17 +100,13 @@ func TestCreateUser(t *testing.T) {
 	}
 
 	expectedUserCount := 4
-	if len(Users) != expectedUserCount {
-		t.Errorf("Expected %d users in the list but got %d", expectedUserCount, len(Users))
+	if len(users) != expectedUserCount {
+		t.Errorf("Expected %d users in the list but got %d", expectedUserCount, len(users))
 	}
 }
 
-//
-// utility functions
-//
-
-// returns the HTTP reponse object and unmarshalled list of current users
-func getUsers() []User {
+// gets the current set of users from the server
+func getUsers() ([]User, error) {
 	server := httptest.NewServer(router)
 	defer server.Close()
 
@@ -142,16 +116,30 @@ func getUsers() []User {
 		},
 	}
 
-	resp, _ := client.Get(server.URL + "/users")
+	resp, err := client.Get(server.URL + "/users")
+	if err != nil {
+		return nil, fmt.Errorf("Failed to create request: %s", err)
+	}
 	defer resp.Body.Close()
 
+	// verify status code
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("Expcted status code %d, but got %d", http.StatusOK, resp.StatusCode)
+	}
+
 	// parse response body
-	body, _ := ioutil.ReadAll(resp.Body)
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return nil, fmt.Errorf("Failed to parse response body: %s", err)
+	}
 
 	var users []User
-	json.Unmarshal(body, &users)
+	err = json.Unmarshal(body, &users)
+	if err != nil {
+		return nil, fmt.Errorf("Failed to unmarshal response: %s", err)
+	}
 
-	return users
+	return users, nil
 }
 
 func getProxy() *url.URL {
