@@ -4,7 +4,11 @@ on:
   push:
     branches:
       - main
- 
+
+defaults:
+   run:
+     working-directory: apps/bookstore-api
+
 jobs:
   run:
     runs-on: ubuntu-latest
