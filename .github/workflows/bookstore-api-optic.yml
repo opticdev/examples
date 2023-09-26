@@ -8,7 +8,7 @@ on:
   pull_request:
     paths:
       - apps/bookstore-api/**
-  workflow_call:
+  workflow_dispatch:
 
 defaults:
   run:
