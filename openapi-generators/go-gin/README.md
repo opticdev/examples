@@ -15,6 +15,4 @@ An example API written with the Go Gin web framework to demonstrate generating a
 1. Install deps, `go mod tidy`.
 1. Run capture, `optic capture --update automatic`.
 
-If you take a look at newly generated `openapi.yml` file. You'll see 3 documented endpoints that correspond to the requests made in the `requests.send` section of the `optic.yml` file.
-
-You can experiment with generating the traffic from external commands or scripts by uncommenting any of the `requests.run` blocks.
+If you take a look at the newly generated `openapi.yml` file you'll see 3 documented endpoints. Explore the `optic.yml` file for details on various ways you can generate traffic to Optic.
