@@ -24,6 +24,9 @@ capture:
       #   command: hurl examples/hurl/*.hurl
       #   proxy_variable: HURL_OPTIC_PROXY
 
+      # run:
+      #   command: hopp test -e examples/hoppscotch/optic.env.json examples/hoppscotch/optic-example-collection.json
+
       # the requests below will be made by Optic and are equivalent to the requests.run examples above
       # send:
       #   - path: /
