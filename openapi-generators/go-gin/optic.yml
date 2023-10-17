@@ -27,6 +27,13 @@ capture:
       # run:
       #   command: hopp test -e examples/hoppscotch/optic.env.json examples/hoppscotch/optic-example-collection.json
 
+      # you can also run postman collections directly from a URL if you supply the `apikey` or `access_key` URL params:
+      #   - https://api.postman.com/collections/<collection_uuid>?apikey=$POSTMAN_API_KEY
+      #   - https://api.postman.com/collections/<collection_uuid>?access_key=$POSTMAN_ACCCESS_KEY
+      # run:
+      #   command: |
+      #     newman run examples/postman/collection.json --env-var URL=$OPTIC_PROXY
+
       # the requests below will be made by Optic and are equivalent to the requests.run examples above
       # send:
       #   - path: /
