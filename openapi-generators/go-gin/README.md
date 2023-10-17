@@ -8,6 +8,8 @@ An example API written with the Go Gin web framework to demonstrate generating a
 - [Curl](https://curl.se) (optional)
 - [Hurl](https://hurl.dev) (optional)
 - [HTTPie](https://httpie.io) (optional)
+- [Hoppscotch CLI](https://docs.hoppscotch.io/documentation/clients/cli) (optional)
+- [Newman (Postman CLI)](https://github.com/postmanlabs/newman) (optional)
 
 
 ## Generating an OpenAPI file with Optic Capture
